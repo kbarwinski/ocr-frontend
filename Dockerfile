@@ -3,7 +3,7 @@ WORKDIR /app
 
 COPY . .
 RUN npm install
-RUN npm run build
+RUN npm run build --prod
 
 FROM nginx:alpine
 COPY --from=build /app/dist/ocr-invoice-frontend /usr/share/nginx/html
