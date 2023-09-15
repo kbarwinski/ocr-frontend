@@ -1,0 +1,111 @@
+<ng-container *ngIf="isLoading; then loading; else detailscontent" />
+<ng-template #loading>
+  <div class="details-container">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-template>
+<ng-template #detailscontent>
+  <div class="base-container">
+    <div class="nav-buttons">
+      <button mat-icon-button (click)="cycleDetails(false)">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <button mat-icon-button (click)="navigateBack()">
+        <mat-icon>home</mat-icon>
+      </button>
+      <button mat-icon-button (click)="cycleDetails(true)">
+        <mat-icon>arrow_forward</mat-icon>
+      </button>
+    </div>
+    <div class="details-container">
+      <div class="example-card">
+        <span>{{ invoice.name }}</span>
+        <img class="image-container" src="data:image/JPEG;base64,{{ invoice.fileData }}" />
+      </div>
+      <div class="example-card">
+        <div class="lists-container">
+          <div class="list-container">
+            <div class="fields-container scroll-y">
+              <span>Current details</span>
+              <table>
+                <thead>
+                  <tr class="field-container">
+                    <th>Name</th>
+                    <th>Value</th>
+                    <th>Certainty</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="field-container" *ngFor="let detail of invoice.details" [ngClass]="{
+                      certain: detail.certainty > 0.9,
+                      probable: detail.certainty > 0.7 && detail.certainty <= 0.9,
+                      warning: detail.certainty > 0.5 && detail.certainty <= 0.7,
+                      error: detail.certainty <= 0.5
+                    }">
+                    <td class="detail-cell">{{ detail.name }}</td>
+                    <td class="detail-cell">{{ detail.value }}</td>
+                    <td class="detail-cell">{{ detail.certainty * 100 }}%</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="button-container">
+              <button *ngIf="invoice.isScanned && invoice.isParsed" mat-button (click)="toggleApproval()">
+                {{invoice.isApproved === true ? "DISAPPROVE" : "APPROVE"}}
+              </button>
+            </div>
+          </div>
+          <form class="list-container" [formGroup]="form" (ngSubmit)="updateInvoice()">
+            <div class="fields-container scroll-y" formGroupName="details">
+              <span>New details</span>
+              <table>
+                <thead>
+                  <tr class="field-container">
+                    <th>Name</th>
+                    <th>Value</th>
+                    <th>Certainty</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="field-container" *ngFor="
+                      let detail of detailsFormArray.controls;
+                      let i = index
+                    " formGroupName="{{ i }}" [ngClass]="{
+                      certain: detail.value.certainty > 0.9,
+                      probable:
+                        detail.value.certainty > 0.7 &&
+                        detail.value.certainty <= 0.9,
+                      warning:
+                        detail.value.certainty > 0.5 &&
+                        detail.value.certainty <= 0.7,
+                      error: detail.value.certainty <= 0.5
+                    }">
+                    <td class="detail-cell">{{ detail.value.name }}</td>
+                    <td class="detail-cell">
+                      <input type="text" [defaultValue]="detail.value.defaultValue" formControlName="value"
+                        (change)="detail.value.certainty = 1.0" />
+                    </td>
+                    <td class="detail-cell">
+                      {{ detail.value.certainty * 100 }}%
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="button-container">
+              <button *ngIf="!invoice.isScanned" (click)="scanInvoice()" mat-button>
+                OCR SCAN
+              </button>
+              <button *ngIf="invoice.isScanned" (click)="analyzeInvoice()" mat-button>
+                PARSE
+              </button>
+              <button type="submit" *ngIf="invoice.details.length > 0" mat-button>
+                UPDATE
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

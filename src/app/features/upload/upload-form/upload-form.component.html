@@ -1,0 +1,12 @@
+<div class="upload-container">
+  <div class="spacer">
+    <h3 class="h3">Select PDF files to upload:</h3>
+  </div>
+  <input
+    class="files-input"
+    type="file"
+    accept=".pdf"
+    multiple
+    (change)="onFileSelected($event)"
+  />
+</div>

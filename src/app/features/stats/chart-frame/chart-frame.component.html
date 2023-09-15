@@ -1,0 +1,13 @@
+<div class="chart-frame">
+    <h3>{{ title }}</h3>
+    <button class="dialog-button" mat-button (click)="openFullScreen()">View Full Screen</button>
+    <ng-container *ngIf="chartType === 'bar'">
+        <app-bar-chart class="chart-item" [shownData]="chartData"></app-bar-chart>
+    </ng-container>
+    <ng-container *ngIf="chartType === 'line'">
+        <app-line-chart class="chart-item" [shownData]="chartData"></app-line-chart>
+    </ng-container>
+    <ng-container *ngIf="chartType === 'pie'">
+        <app-pie-chart class="chart-item" [shownData]="chartData"></app-pie-chart>
+    </ng-container>
+</div>

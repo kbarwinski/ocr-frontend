@@ -1,0 +1,60 @@
+<main class="landing-container">
+  <app-invoice-list class="invoice-list" (paginationChange)="fetchInvoices()" [invoices]="invoices"
+    [isLoading]="isLoading" [checkboxValues]="checkboxValues" />
+  <div class="actions-container">
+    <div class="paginate-container">
+      <div class="to-left">
+        <button mat-fab extended (click)="checkAll(true)">All</button>
+        <button mat-fab extended (click)="checkAll(false)">None</button>
+        <button mat-fab extended (click)="batchControls(0)">Scan</button>
+        <button mat-fab extended (click)="batchControls(1)">Analyze</button>
+        <button mat-fab extended (click)="batchControls(2)">Delete</button>
+      </div>
+    </div>
+    <div class="paginate-container">
+      <div class="to-right">
+        <div class="filter-toggles">
+          <div class="filter-toggle">
+            <span class="toggles-title">Scanned</span>
+            <mat-slide-toggle [(ngModel)]="this.filterChecks.scannedYes"
+              (change)="saveToggles(0)">Yes</mat-slide-toggle>
+            <div class="spacer"></div>
+            <mat-slide-toggle [(ngModel)]="this.filterChecks.scannedNo" (change)="saveToggles(0)">No</mat-slide-toggle>
+          </div>
+          <div class="filter-toggle">
+            <span class="toggles-title">Parsed</span>
+            <mat-slide-toggle [(ngModel)]="this.filterChecks.parsedYes" (change)="saveToggles(1)">Yes</mat-slide-toggle>
+            <div class="spacer"></div>
+            <mat-slide-toggle [(ngModel)]="this.filterChecks.parsedNo" (change)="saveToggles(1)">No</mat-slide-toggle>
+          </div>
+          <div class="filter-toggle">
+            <span class="toggles-title">Approved</span>
+            <mat-slide-toggle [(ngModel)]="this.filterChecks.approvedYes"
+              (change)="saveToggles(2)">Yes</mat-slide-toggle>
+            <div class="spacer"></div>
+            <mat-slide-toggle [(ngModel)]="this.filterChecks.approvedNo" (change)="saveToggles(2)">No</mat-slide-toggle>
+          </div>
+        </div>
+        <mat-form-field>
+          <mat-label>Filter invoices by date range</mat-label>
+          <mat-date-range-input [formGroup]="invoiceDateRange" [rangePicker]="picker">
+            <input matStartDate formControlName="start" placeholder="Start date" />
+            <input matEndDate formControlName="end" placeholder="End date" />
+          </mat-date-range-input>
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+          <button mat-button *ngIf="invoiceDateRange.value.start || invoiceDateRange.value.end"
+            (click)="clearDateRange()">Clear</button>
+          <mat-error *ngIf="
+              invoiceDateRange.controls.start.hasError('matStartDateInvalid')
+            ">Invalid start date</mat-error>
+          <mat-error *ngIf="invoiceDateRange.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+        </mat-form-field>
+      </div>
+      <mat-paginator #paginator (page)="handlePageEvent($event)" [length]="paginationArgs.totalCount"
+        [pageSize]="paginationArgs.pageSize" [showFirstLastButtons]="true" [pageSizeOptions]="[3, 5, 10, 25, 100]"
+        [pageIndex]="0" aria-label="Select page">
+      </mat-paginator>
+    </div>
+  </div>
+</main>

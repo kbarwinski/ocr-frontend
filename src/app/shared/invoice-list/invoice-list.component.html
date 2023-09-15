@@ -1,0 +1,37 @@
+<ng-container *ngIf="isLoading; then loading; else listcontent" />
+<ng-template #loading>
+  <div class="spinner-container">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-template>
+<ng-template #listcontent>
+  <div class="list-container">
+    <div class="list-item-container" *ngFor="let invoice of invoices">
+      <div class="item-main-row">
+        <input type="checkbox" id="{{ invoice.id }}" name="{{ invoice.id }}" value="{{ invoice.id }}"
+          [checked]="checkboxValues[invoice.id]" (change)="onCheckboxChange(invoice.id, $event)" />
+        <div class="item-icon">
+          <mat-icon>folder</mat-icon>
+        </div>
+        <div class="item-info">
+          <mat-chip> Document: {{ invoice.name }} </mat-chip>
+        </div>
+        <div class="item-actions">
+          <button class="btn-padded" (click)="viewDetails(invoice.id)" mat-fab>
+            <mat-icon>info</mat-icon>
+          </button>
+          <button class="btn-padded" (click)="deleteInvoice(invoice.id)" mat-fab color="warn">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+      <div class="status-chips">
+        <mat-chip-listbox aria-label="Document statuses">
+          <mat-chip-option *ngIf="invoice?.isScanned === true" selected selectable="false" color="warning">Scanned</mat-chip-option>
+          <mat-chip-option *ngIf="invoice?.isParsed === true" selected selectable="false" color="accent">Parsed</mat-chip-option>
+          <mat-chip-option *ngIf="invoice?.isApproved === true" selected selectable="false">Approved</mat-chip-option>
+        </mat-chip-listbox>
+      </div>
+    </div>
+  </div>
+</ng-template>

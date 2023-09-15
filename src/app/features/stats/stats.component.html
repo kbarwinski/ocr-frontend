@@ -1,0 +1,52 @@
+<div>
+    <div *ngIf="!this.showTotal" class="grid-container">
+        <div class="charts-grid">
+            <app-chart-frame class="one-col" title="Actions Count" chartType="bar"
+                [chartData]="actionsCountData"></app-chart-frame>
+            <app-chart-frame class="one-col" title="Actions Total Time" chartType="bar"
+                [chartData]="actionsTotalTimeData"></app-chart-frame>
+            <app-chart-frame class="one-col" title="Actions Avg Time" chartType="bar"
+                [chartData]="actionsAvgTimeData"></app-chart-frame>
+            <app-chart-frame class="three-col" title="Details Count" chartType="line"
+                [chartData]="detailsData"></app-chart-frame>
+        </div>
+    </div>
+    <div *ngIf="this.showTotal" class="grid-container">
+        <div class="charts-grid">
+            <app-chart-frame class="one-col" title="Actions Count" chartType="bar"
+                [chartData]="totalActionsCountData"></app-chart-frame>
+            <app-chart-frame class="one-col" title="Actions Total Time" chartType="bar"
+                [chartData]="totalActionsTotalTimeData"></app-chart-frame>
+            <app-chart-frame class="one-col" title="Actions Avg Time" chartType="bar"
+                [chartData]="totalActionsAvgTimeData"></app-chart-frame>
+            <app-chart-frame class="three-col" title="Details Count" chartType="bar"
+                [chartData]="totalDetailsData"></app-chart-frame>
+        </div>
+    </div>
+    <div class="controls-container">
+        <div class="to-right">
+            <div class="filter-toggles">
+                <div class="filter-toggle">
+                    <span class="toggles-title">Daily/Total</span>
+                    <mat-slide-toggle [ngModel]="this.showTotal" (change)="toggleTotalView()" />
+                </div>
+            </div>
+            <mat-form-field>
+                <mat-label>Filter stats by date range</mat-label>
+                <mat-date-range-input [formGroup]="statsDateRange" [rangePicker]="picker">
+                    <input matStartDate formControlName="start" placeholder="Start date" />
+                    <input matEndDate formControlName="end" placeholder="End date" />
+                </mat-date-range-input>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+                <button mat-button *ngIf="statsDateRange.value.start || statsDateRange.value.end"
+                    (click)="clearDateRange()">Clear</button>
+                <mat-error *ngIf="
+                statsDateRange.controls.start.hasError('matStartDateInvalid')
+              ">Invalid start date</mat-error>
+                <mat-error *ngIf="statsDateRange.controls.end.hasError('matEndDateInvalid')">Invalid end
+                    date</mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,37 @@
+<mat-sidenav-container class="example-container" autosize>
+  <mat-sidenav
+    #drawer
+    class="example-sidenav"
+    mode="side"
+    [fixedInViewport]="true"
+  >
+    <div class="flex-container">
+      <sidenav-button
+        routerLink=""
+        iconName="home"
+        buttonLabel="Landing page"
+      />
+      <sidenav-button
+        routerLink="/upload"
+        iconName="cloud_upload"
+        buttonLabel="Upload invoices"
+      />
+      <sidenav-button
+        routerLink="/stats"
+        iconName="assessment"
+        buttonLabel="Statistics"
+      />
+      <sidenav-button
+        routerLink="/send"
+        iconName="send"
+        buttonLabel="Send to ERP"
+      />
+    </div>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="example-sidenav-content">
+    <app-header (menuClickEvent)="drawer.toggle()" />
+
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>

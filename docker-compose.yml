@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    environment:
+      - BASE_URL=${BASE_URL}
+      - MAPPED_PORT=${MAPPED_PORT}
+      - MAPPING_PORT=${MAPPING_PORT}
+    image: ocr-frontend-image
+    ports:
+      - "${MAPPING_PORT}:${MAPPED_PORT}"
