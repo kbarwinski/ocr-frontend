@@ -12,24 +12,21 @@ export class AuthInterceptor implements HttpInterceptor {
   public token: string | null = '';
 
   public setJwtToken(token: string) {
-    localStorage.setItem("Auth", token);
+    localStorage.setItem('Auth', token);
   }
 
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    this.token = localStorage.getItem("Auth");
+    this.token = localStorage.getItem('Auth');
     if (this.token) {
-      console.log('token');
       request = request.clone({
         setHeaders: {
-          Authorization: `Bearer ${this.token}`,
+          Authorization: `Bearer: ${this.token}`,
         },
       });
     }
-    else
-      console.log('no token!');
     return next.handle(request);
   }
 }

@@ -6,15 +6,13 @@
     </button>
     <span class="header-title">OCR Invoice Automation</span>
     <span class="example-spacer"></span>
+    <button (click)="openDialog(true)" mat-button class="right-button"
+      aria-label="Example icon-button with menu icon">
+      Login
+    </button>
+    <button (click)="openDialog(false)" mat-button class="right-button"
+      aria-label="Example icon-button with menu icon">
+      Register
+    </button>
   </mat-toolbar>
-  <button (click)="openDialog(true)" mat-icon-button class="example-icon"
-    aria-label="Example icon-button with menu icon">
-    Login
-    <mat-icon>menu</mat-icon>
-  </button>
-  <button (click)="openDialog(false)" mat-icon-button class="example-icon"
-    aria-label="Example icon-button with menu icon">
-    Register
-    <mat-icon>menu</mat-icon>
-  </button>
 </p>

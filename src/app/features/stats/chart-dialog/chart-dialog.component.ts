@@ -30,6 +30,8 @@ export class ChartDialogComponent implements OnInit {
     this.loadComponent(this.data.component, this.data.chartData);
   }
 
+  closeDialog() {}
+
   loadComponent(component: any, chartData: ChartData) {
     this.container.clear();
 
