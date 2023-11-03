@@ -50,12 +50,13 @@
               </table>
             </div>
             <div class="button-container">
-              <button *ngIf="invoice.isScanned && invoice.isParsed" mat-button (click)="toggleApproval()">
+              <button *ngIf="invoice.isScanned && invoice.isParsed && hasUserRole()" mat-button
+                (click)="toggleApproval()">
                 {{invoice.isApproved === true ? "DISAPPROVE" : "APPROVE"}}
               </button>
             </div>
           </div>
-          <form class="list-container" [formGroup]="form" (ngSubmit)="updateInvoice()">
+          <form class="list-container" [formGroup]="form" (ngSubmit)="hasUserRole() ? updateInvoice() : null">
             <div class="fields-container scroll-y" formGroupName="details">
               <span>New details</span>
               <table>
@@ -93,13 +94,13 @@
               </table>
             </div>
             <div class="button-container">
-              <button *ngIf="!invoice.isScanned" (click)="scanInvoice()" mat-button>
+              <button *ngIf="!invoice.isScanned" [disabled]="hasUserRole()" (click)="scanInvoice()" mat-button>
                 OCR SCAN
               </button>
-              <button *ngIf="invoice.isScanned" (click)="analyzeInvoice()" mat-button>
+              <button *ngIf="invoice.isScanned" [disabled]="hasUserRole()" (click)="analyzeInvoice()" mat-button>
                 PARSE
               </button>
-              <button type="submit" *ngIf="invoice.details.length > 0" mat-button>
+              <button type="submit" [disabled]="hasUserRole()" *ngIf="invoice.details.length > 0" mat-button>
                 UPDATE
               </button>
             </div>

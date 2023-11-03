@@ -10,6 +10,7 @@ import { SignalRService } from 'src/app/core/services/signalr.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackBarComponent } from 'src/app/core/layout/loading-snackbar/loading-snackbar.component';
 import { SnackBarMessageService } from 'src/app/core/services/snackbar.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-landing',
@@ -20,7 +21,8 @@ export class LandingComponent implements OnInit {
   constructor(
     private invoicesService: InvoicesService,
     private signalrService: SignalRService,
-    private snackBarService: SnackBarMessageService
+    private snackBarService: SnackBarMessageService,
+    private authService: AuthService
   ) {}
 
   public invoices: InvoiceDto[] = [];
@@ -56,6 +58,10 @@ export class LandingComponent implements OnInit {
     start: new FormControl<Date | null>(this.paginationArgs.startDate),
     end: new FormControl<Date | null>(this.paginationArgs.endDate),
   });
+
+  hasUserRole(): boolean {
+    return this.authService.hasRoles(['User']);
+  }
 
   saveToLocalStorage(key: string, value: any) {
     window.localStorage.setItem(key, JSON.stringify(value));
@@ -131,9 +137,7 @@ export class LandingComponent implements OnInit {
           this.checkboxValues[x.id] = false;
         });
 
-        setTimeout(() => {
-          this.isLoading = false;
-        }, 500);
+        this.isLoading = false;
       },
       (error: any) => {
         console.error(error);

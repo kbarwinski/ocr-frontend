@@ -4,11 +4,11 @@
   <div class="actions-container">
     <div class="paginate-container">
       <div class="to-left">
-        <button class="fixed-button" mat-fab extended (click)="checkAll(true)">All</button>
-        <button class="fixed-button" mat-fab extended (click)="checkAll(false)">None</button>
-        <button class="fixed-button" mat-fab extended (click)="batchControls(0)">Scan</button>
-        <button class="fixed-button" mat-fab extended (click)="batchControls(1)">Analyze</button>
-        <button class="fixed-button" mat-fab extended (click)="batchControls(2)">Delete</button>
+        <button mat-fab extended [disabled]="!hasUserRole()" (click)="checkAll(true)">All</button>
+        <button mat-fab extended [disabled]="!hasUserRole()" (click)="checkAll(false)">None</button>
+        <button mat-fab extended [disabled]="!hasUserRole()" (click)="batchControls(0)">Scan</button>
+        <button mat-fab extended [disabled]="!hasUserRole()" (click)="batchControls(1)">Analyze</button>
+        <button mat-fab extended [disabled]="!hasUserRole()" (click)="batchControls(2)">Delete</button>
       </div>
     </div>
     <div class="paginate-container">

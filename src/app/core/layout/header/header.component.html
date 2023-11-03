@@ -6,9 +6,13 @@
     </button>
     <span class="header-title">OCR Invoice Automation</span>
     <div>
-      <button (click)="openDialog(true)" mat-button class="example-icon"
+      <button *ngIf="!hasAnyRole()" (click)="openDialog(true)" mat-button class="example-icon"
         aria-label="Example icon-button with menu icon">
         Login
+      </button>
+      <button *ngIf="hasAnyRole()" (click)="handleLogout()" mat-button class="example-icon"
+        aria-label="Example icon-button with menu icon">
+        Logout
       </button>
       <!-- <button (click)="openDialog(false)" mat-button class="example-icon"
         aria-label="Example icon-button with menu icon">

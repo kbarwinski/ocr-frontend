@@ -6,27 +6,28 @@ import {
   HttpInterceptor,
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { AuthService } from '../services/auth.service'; // adjust the import path as needed
 
-@Injectable({ providedIn: 'root' })
+@Injectable({
+  providedIn: 'root',
+})
 export class AuthInterceptor implements HttpInterceptor {
-  public token: string | null = '';
-
-  public setJwtToken(token: string) {
-    localStorage.setItem('Auth', token);
-  }
+  constructor(private authService: AuthService) {}
 
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    this.token = localStorage.getItem('Auth');
-    if (this.token) {
+    const token = this.authService.getToken();
+
+    if (token) {
       request = request.clone({
         setHeaders: {
-          Authorization: `Bearer: ${this.token}`,
+          Authorization: `Bearer ${token}`,
         },
       });
     }
+
     return next.handle(request);
   }
 }

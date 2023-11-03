@@ -11,6 +11,7 @@ import {
   InvoicesService,
   InvoiceUpdateModel,
 } from 'src/app/core/services/invoices.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-details',
@@ -22,7 +23,8 @@ export class DetailsComponent implements OnInit {
     private fb: FormBuilder,
     private invoicesService: InvoicesService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private authService: AuthService
   ) {}
 
   private routeSub!: Subscription;
@@ -43,6 +45,10 @@ export class DetailsComponent implements OnInit {
   public invoice!: FullInvoiceDto;
 
   public isLoading: boolean = true;
+
+  hasUserRole(): boolean {
+    return this.authService.hasRoles(['user']);
+  }
 
   saveToLocalStorage(key: string, value: any) {
     window.localStorage.setItem(key, JSON.stringify(value));
