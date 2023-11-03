@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SignalRService } from './core/services/signalr.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { SnackBarComponent } from './core/layout/loading-snackbar/loading-snackbar.component';
+import { SnackBarMessageService } from './core/services/snackbar.service';
 
 @Component({
   selector: 'app-root',
@@ -13,26 +12,20 @@ export class AppComponent implements OnInit {
 
   constructor(
     private signalrService: SignalRService,
-    private snackBar: MatSnackBar
+    private snackBarService: SnackBarMessageService
   ) {}
-  
+
   ngOnInit() {
     this.signalrService.startConnection();
 
     this.signalrService.addTransferDataListener('"BatchScanCompleted"', () => {
-      this.snackBar.dismiss();
-      this.snackBar.openFromComponent(SnackBarComponent, {
-        data: { message: 'Batch scan had finished.', progress: 100 },
-      });
+      this.snackBarService.open('Batch scan had finished', '', 3);
     });
 
     this.signalrService.addTransferDataListener(
       '"BatchAnalyzingCompleted"',
       () => {
-        this.snackBar.dismiss()
-        this.snackBar.openFromComponent(SnackBarComponent, {
-          data: { message: 'Batch parsing had finished.', progress: 100 },
-        });
+        this.snackBarService.open('Batch parsing had finished', '', 3);
       }
     );
   }

@@ -9,6 +9,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { SignalRService } from 'src/app/core/services/signalr.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackBarComponent } from 'src/app/core/layout/loading-snackbar/loading-snackbar.component';
+import { SnackBarMessageService } from 'src/app/core/services/snackbar.service';
 
 @Component({
   selector: 'app-landing',
@@ -19,7 +20,7 @@ export class LandingComponent implements OnInit {
   constructor(
     private invoicesService: InvoicesService,
     private signalrService: SignalRService,
-    private snackBar: MatSnackBar
+    private snackBarService: SnackBarMessageService
   ) {}
 
   public invoices: InvoiceDto[] = [];
@@ -101,15 +102,11 @@ export class LandingComponent implements OnInit {
     switch (mode) {
       case 0:
         this.invoicesService.batchScan(invoiceIds).subscribe();
-        this.snackBar.openFromComponent(SnackBarComponent, {
-          data: { message: 'Batch scan in progress...', progress: 50 },
-        });
+        this.snackBarService.open('Batch scan in progress..', '', null);
         break;
       case 1:
         this.invoicesService.batchAnalyze(invoiceIds).subscribe();
-        this.snackBar.openFromComponent(SnackBarComponent, {
-          data: { message: 'Batch parsing in progress...', progress: 50 },
-        });
+        this.snackBarService.open('Batch parsing in progress..', '', null);
         break;
       case 2:
         this.invoicesService
