@@ -15,7 +15,6 @@ export class SignalRService {
 
     this.hubConnection
       .start()
-      .then(() => console.log('Connection started'))
       .catch((err) => console.log('Error while starting connection: ' + err));
   };
 
@@ -25,7 +24,6 @@ export class SignalRService {
   ) => {
     this.hubConnection.on('ReceiveMessage', (data: string) => {
       if (data.startsWith(messageContents)) {
-        console.log(data);
         callbackFn();
       }
     });

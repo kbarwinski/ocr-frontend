@@ -57,7 +57,10 @@ export interface InvoiceUpdateModel {
 
 @Injectable({ providedIn: 'root' })
 export class InvoicesService {
-  constructor(private readonly http: HttpClient, private readonly authInterceptor: AuthInterceptor) {}
+  constructor(
+    private readonly http: HttpClient,
+    private readonly authInterceptor: AuthInterceptor
+  ) {}
 
   getPage(request: GetInvoicesListQuery): Observable<any> {
     return this.http.get(url, {
@@ -126,5 +129,12 @@ export class InvoicesService {
 
   updateDetails(id: string, details: Details[]) {
     return this.http.put(url + '/' + id + '/details', details, { headers });
+  }
+
+  generateRandomInvoicePdf(): Observable<any> {
+    return this.http.post(url + '/generate', null, {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+      responseType: 'blob' as 'json',
+    });
   }
 }

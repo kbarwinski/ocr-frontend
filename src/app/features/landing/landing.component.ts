@@ -98,7 +98,6 @@ export class LandingComponent implements OnInit {
 
   public batchControls(mode: number) {
     let invoiceIds = this.getActiveCheckboxIds();
-    console.log(invoiceIds);
     switch (mode) {
       case 0:
         this.invoicesService.batchScan(invoiceIds).subscribe();

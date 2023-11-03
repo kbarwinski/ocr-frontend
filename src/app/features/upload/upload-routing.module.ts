@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { UploadComponent } from './upload.component';
+import { RngInvoiceButtonComponent } from './rng-invoice-button/rng-invoice-button.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: UploadComponent,
+    component: UploadComponent
   },
 ];
 
@@ -13,4 +14,6 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class UploadRoutingModule {}
+export class UploadRoutingModule { }
+
+

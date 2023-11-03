@@ -1,10 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LandingComponent } from './features/landing/landing.component';
-import { UploadComponent } from './features/upload/upload.component';
 import { SendComponent } from './features/send/send.component';
-import { DetailsComponent } from './features/details/details.component';
-import { StatsComponent } from './features/stats/stats.component';
 
 const routes: Routes = [
   {

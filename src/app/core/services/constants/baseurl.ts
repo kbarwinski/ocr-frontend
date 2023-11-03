@@ -1,6 +1,4 @@
-import { environment } from '../../../../environments/environment.prod'
+import { environment } from '../../../../environments/environment'
 
-const apiBaseUrl = environment.apiBaseUrl;
-
-export const baseUrl = apiBaseUrl;
+export const baseUrl = environment.apiBaseUrl;
 

@@ -13,9 +13,7 @@ export class UploadFormComponent {
     const files: FileList = event.target.files;
 
     if (files.length > 0) {
-      this.invoicesService.upload(files).subscribe((response: any) => {
-        console.log(response);
-      });
+      this.invoicesService.upload(files).subscribe((response: any) => {});
     }
   }
 }
