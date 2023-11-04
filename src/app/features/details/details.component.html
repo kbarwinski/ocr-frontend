@@ -94,13 +94,13 @@
               </table>
             </div>
             <div class="button-container">
-              <button *ngIf="!invoice.isScanned" [disabled]="hasUserRole()" (click)="scanInvoice()" mat-button>
+              <button *ngIf="!invoice.isScanned" [disabled]="!hasUserRole()" (click)="scanInvoice()" mat-button>
                 OCR SCAN
               </button>
-              <button *ngIf="invoice.isScanned" [disabled]="hasUserRole()" (click)="analyzeInvoice()" mat-button>
+              <button *ngIf="invoice.isScanned" [disabled]="!hasUserRole()" (click)="analyzeInvoice()" mat-button>
                 PARSE
               </button>
-              <button type="submit" [disabled]="hasUserRole()" *ngIf="invoice.details.length > 0" mat-button>
+              <button type="submit" [disabled]="!hasUserRole()" *ngIf="invoice.details.length > 0" mat-button>
                 UPDATE
               </button>
             </div>

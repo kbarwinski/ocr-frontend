@@ -47,7 +47,7 @@ export class DetailsComponent implements OnInit {
   public isLoading: boolean = true;
 
   hasUserRole(): boolean {
-    return this.authService.hasRoles(['user']);
+    return this.authService.hasRoles(['User']);
   }
 
   saveToLocalStorage(key: string, value: any) {
