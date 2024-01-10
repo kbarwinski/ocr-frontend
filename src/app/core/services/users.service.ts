@@ -47,8 +47,7 @@ export class UsersService {
   }
 
   signOut(): Observable<any> {
-    return this.http
-      .post(url + '/signout', null)
-      .pipe(tap((_) => this.authService.clearUserInfo()));
+    this.authService.clearUserInfo();
+    return this.http.post(url + '/signout', null);
   }
 }

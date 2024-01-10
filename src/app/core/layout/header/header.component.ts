@@ -25,7 +25,6 @@ export class HeaderComponent {
 
   handleLogout(): void {
     this.usersService.signOut().subscribe((response) => {});
-    console.log('test');
   }
 
   openDialog(isLogin: boolean): void {
